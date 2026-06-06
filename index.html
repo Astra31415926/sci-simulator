@@ -2,356 +2,93 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>SCI Simulator | Інтерактивний симулятор спектрального злиття</title>
-    <meta name="description" content="Інтерактивна демонстрація принципу Zero-Noise моделі SCI. Змінюйте довжину хвилі фільтра та спостерігайте за злиттям зон.">
-    <meta name="author" content="Mykhailo Kashkarov">
+    <title>SCI Simulator — проста версія</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            background: #f1f5f9;
-            color: #0f172a;
-            line-height: 1.5;
-            padding: 2rem 1rem;
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f4f8;
+            text-align: center;
         }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* Картка симулятора */
-        .simulator-card {
-            background: #0f172a;
-            border-radius: 2rem;
-            padding: 2rem;
-            color: #e2e8f0;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            margin-bottom: 2rem;
-            border-left: 3px solid #14b8a6;
-            padding-left: 1rem;
-        }
-
-        /* Слайдер */
-        .slider-container {
-            margin: 2rem 0;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
-            -webkit-appearance: none;
-            background: #334155;
-            border-radius: 10px;
-            outline: none;
-        }
-
-        input[type="range"]:focus {
-            outline: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #14b8a6;
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 6px #14b8a6;
-        }
-
-        .wavelength-value {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #14b8a6;
-            background: #1e293b;
-            padding: 0.25rem 1rem;
-            border-radius: 2rem;
-            display: inline-block;
-        }
-
-        /* Зони A і B */
-        .zones {
-            display: flex;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
         .zone {
-            flex: 1;
-            text-align: center;
-            background: #1e293b;
-            padding: 1rem;
-            border-radius: 1.5rem;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 12px;
+            border: 2px solid #333;
         }
-
-        .zone-color {
-            height: 140px;
-            border-radius: 1rem;
-            margin: 1rem 0;
-            transition: background-color 0.1s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        input {
+            width: 100%;
+            margin: 20px 0;
         }
-
-        .zone-label {
-            font-weight: 600;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        .zone-desc {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            margin-top: 0.5rem;
-        }
-
-        /* Результат */
-        .result-panel {
-            background: #1e293b;
-            border-radius: 1rem;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            text-align: center;
-            border-left: 4px solid #14b8a6;
-        }
-
-        .diff-value {
-            font-size: 2rem;
-            font-weight: 800;
-            font-family: monospace;
-        }
-
-        .zero-noise-badge {
-            display: inline-block;
-            background: #14b8a6;
-            color: #0f172a;
-            padding: 0.3rem 1rem;
-            border-radius: 2rem;
+        .diff {
+            font-size: 24px;
             font-weight: bold;
-            margin-top: 0.75rem;
-            font-size: 0.8rem;
-        }
-
-        /* Кнопка на основний сайт */
-        .back-link {
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .button {
-            display: inline-block;
-            background: #334155;
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 2rem;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .button:hover {
-            background: #14b8a6;
-            color: #0f172a;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.75rem;
-            color: #64748b;
-        }
-
-        @media (max-width: 600px) {
-            .simulator-card {
-                padding: 1.5rem;
-            }
-            .zone-color {
-                height: 100px;
-            }
-            .diff-value {
-                font-size: 1.4rem;
-            }
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="simulator-card">
-        <h1>⚡ SCI Simulator</h1>
-        <div class="subtitle">Інтерактивна демонстрація принципу Zero-Noise</div>
 
-        <!-- Слайдер -->
-        <div class="slider-container">
-            <div class="slider-label">
-                <span>📡 Центральна довжина хвилі фільтра (λ)</span>
-                <span class="wavelength-value" id="wavelengthValue">540</span>
-                <span>нм</span>
-            </div>
-            <input type="range" id="wavelengthSlider" min="400" max="700" value="540" step="5">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #64748b; margin-top: 0.5rem;">
-                <span>Фіолетовий (400)</span>
-                <span>Зелений (540)</span>
-                <span>Червоний (700)</span>
-            </div>
-        </div>
+<h1>SCI Simulator</h1>
+<p>Рухай повзунок → дивись, як змінюються квадрати</p>
 
-        <!-- Зони A і B -->
-        <div class="zones">
-            <div class="zone">
-                <div class="zone-label">🔵 Зона A</div>
-                <div class="zone-color" id="zoneA"></div>
-                <div class="zone-desc">Спектральний профіль A<br>(наприклад, фіолетово-синій)</div>
-            </div>
-            <div class="zone">
-                <div class="zone-label">🟠 Зона B</div>
-                <div class="zone-color" id="zoneB"></div>
-                <div class="zone-desc">Спектральний профіль B<br>(наприклад, жовтогарячий)</div>
-            </div>
-        </div>
-
-        <!-- Результат: різниця інтегральних відгуків -->
-        <div class="result-panel">
-            <div style="font-size: 0.8rem; margin-bottom: 0.5rem;">ΔI = | I_A − I_B |</div>
-            <div class="diff-value" id="diffValue">0.0000</div>
-            <div id="zeroNoiseBadge"></div>
-            <div style="font-size: 0.7rem; margin-top: 0.75rem; color: #94a3b8;">
-                При ΔI → 0 досягається оптичне злиття (Zero-Noise)
-            </div>
-        </div>
-
-        <div style="font-size: 0.8rem; text-align: center; border-top: 1px solid #334155; padding-top: 1.5rem; margin-top: 0.5rem;">
-            💡 <strong>Принцип:</strong> при λ = 540 нм (зелений канал) спектральні відгуки зон вирівнюються.<br>
-            Змінюйте довжину хвилі – спостерігайте розходження.
-        </div>
-    </div>
-
-    <div class="back-link">
-        <a href="https://astra31415926.github.io/sci-portal/" class="button">← До основного сайту Model SCI</a>
-    </div>
-
-    <footer>
-        Mykhailo Kashkarov © 2026 · SCI Universal Model · Spectral Channel Integrity
-    </footer>
+<div>
+    <div class="zone" id="zoneA" style="background-color: rgb(50, 100, 200);"></div>
+    <div class="zone" id="zoneB" style="background-color: rgb(200, 80, 50);"></div>
 </div>
 
-<script>
-    (function() {
-        // Отримуємо елементи
-        const slider = document.getElementById('wavelengthSlider');
-        const wavelengthSpan = document.getElementById('wavelengthValue');
-        const diffSpan = document.getElementById('diffValue');
-        const zoneA = document.getElementById('zoneA');
-        const zoneB = document.getElementById('zoneB');
-        const badgeDiv = document.getElementById('zeroNoiseBadge');
+<input type="range" id="slider" min="400" max="700" value="540" step="5">
 
-        // Функція, що обчислює змодельований інтегральний відгук для зони A та B
-        // В реальній SCI-моделі це інтеграл ∫ R(λ)·S(λ) dλ.
-        // Тут – математично коректна апроксимація: зони мають різні спектральні профілі,
-        // але збігаються в точці 540 нм (Zero-Noise).
-        function computeResponses(wavelength) {
-            // Профіль зони A: пік у синьому (450 нм) і невеликий підйом у червоному
-            // Профіль зони B: пік у червоному (620 нм) і невеликий підйом у синьому
-            // Обидва мають однаковий відгук при 540 нм.
-            
-            // Нормувальний коефіцієнт – щоб значення були в діапазоні 0..1
-            const centerA = 450; // пік зони A
-            const centerB = 620; // пік зони B
-            const crossPoint = 540; // точка злиття
-            
-            // Гаусоподібні профілі з однаковим значенням у crossPoint
-            const sigma = 70;
-            
-            const responseA_raw = Math.exp(-Math.pow(wavelength - centerA, 2) / (2 * sigma * sigma));
-            const responseB_raw = Math.exp(-Math.pow(wavelength - centerB, 2) / (2 * sigma * sigma));
-            
-            // Масштабуємо так, щоб у точці crossPoint вони були рівні
-            const scaleA = Math.exp(-Math.pow(crossPoint - centerA, 2) / (2 * sigma * sigma));
-            const scaleB = Math.exp(-Math.pow(crossPoint - centerB, 2) / (2 * sigma * sigma));
-            
-            // Нормуємо: у точці crossPoint обидві дорівнюють 0.7 (для гарної візуалізації)
-            const targetValue = 0.7;
-            const finalScaleA = targetValue / scaleA;
-            const finalScaleB = targetValue / scaleB;
-            
-            let responseA = responseA_raw * finalScaleA;
-            let responseB = responseB_raw * finalScaleB;
-            
-            // Обмежуємо діапазон 0..1
-            responseA = Math.min(1.0, Math.max(0.15, responseA));
-            responseB = Math.min(1.0, Math.max(0.15, responseB));
-            
-            return { responseA, responseB };
+<div class="diff">
+    Різниця (ΔI): <span id="diff">0.0000</span>
+</div>
+
+<p><strong>540 нм</strong> — квадрати однакові за яскравістю (злиття)</p>
+
+<script>
+    const slider = document.getElementById('slider');
+    const diffSpan = document.getElementById('diff');
+    const zoneA = document.getElementById('zoneA');
+    const zoneB = document.getElementById('zoneB');
+
+    function update() {
+        let wl = Number(slider.value);
+        
+        // Яскравість зони A: максимальна при 450 нм, мінімальна при 700
+        let brightnessA = 1 - Math.abs(wl - 450) / 300;
+        brightnessA = Math.min(1, Math.max(0.2, brightnessA));
+        
+        // Яскравість зони B: максимальна при 620 нм, мінімальна при 450
+        let brightnessB = 1 - Math.abs(wl - 620) / 300;
+        brightnessB = Math.min(1, Math.max(0.2, brightnessB));
+        
+        // Робимо їх рівними при 540 нм
+        if (wl >= 530 && wl <= 550) {
+            brightnessA = 0.7;
+            brightnessB = 0.7;
         }
         
-        // Функція оновлення UI
-        function update() {
-            const wavelength = parseInt(slider.value, 10);
-            wavelengthSpan.textContent = wavelength;
-            
-            const { responseA, responseB } = computeResponses(wavelength);
-            
-            // Різниця між відгуками
-            const diff = Math.abs(responseA - responseB);
-            diffSpan.textContent = diff.toFixed(4);
-            
-            // Колір зон (візуалізація інтенсивності + базовий відтінок)
-            // Зона A – синюватий, Зона B – червонуватий, яскравість залежить від response
-            const intensityA = Math.floor(responseA * 200 + 55);
-            const intensityB = Math.floor(responseB * 200 + 55);
-            
-            zoneA.style.backgroundColor = `rgb(30, 100 + ${intensityA * 0.3}, 220)`;
-            zoneB.style.backgroundColor = `rgb(220, 80 + ${intensityB * 0.5}, 40)`;
-            
-            // Для додаткової наочності – додаємо зміну яскравості
-            zoneA.style.opacity = 0.7 + responseA * 0.3;
-            zoneB.style.opacity = 0.7 + responseB * 0.3;
-            
-            // Zero-Noise badge
-            if (diff < 0.01) {
-                badgeDiv.innerHTML = '<div class="zero-noise-badge">✅ Zero-Noise досягнуто (оптичне злиття)</div>';
-                diffSpan.style.color = '#34d399';
-            } else {
-                badgeDiv.innerHTML = '<div style="color:#94a3b8; font-size:0.7rem;">⚠️ Різниця відгуків – зони роздільні</div>';
-                diffSpan.style.color = '#f87171';
-            }
-            
-            // Додаткова позначка біля слайдера (вузький пік)
-            const marker = document.getElementById('marker-note');
-            if (!marker && Math.abs(wavelength - 540) < 3) {
-                // якщо треба – показуємо повідомлення
-            }
-        }
+        // Змінюємо яскравість (додаємо білого або чорного)
+        zoneA.style.backgroundColor = `rgb(${50 + brightnessA * 50}, ${100 + brightnessA * 80}, ${200 - brightnessA * 50})`;
+        zoneB.style.backgroundColor = `rgb(${200 - brightnessB * 50}, ${80 + brightnessB * 60}, ${50 + brightnessB * 30})`;
         
-        slider.addEventListener('input', update);
-        update(); // перший виклик
-    })();
+        // Різниця
+        let diff = Math.abs(brightnessA - brightnessB);
+        diffSpan.textContent = diff.toFixed(4);
+        
+        if (diff < 0.05) {
+            diffSpan.style.color = "green";
+        } else {
+            diffSpan.style.color = "red";
+        }
+    }
+
+    slider.addEventListener('input', update);
+    update();
 </script>
+
 </body>
 </html>
