@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCI Universal Model | Spectral Channel Integrity</title>
-    <!-- Подключаем шрифт -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- Подключаем иконки -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- СТИЛИ --- */
         :root {
             --primary-color: #2c3e50;
             --accent-color: #3498db;
@@ -147,6 +144,26 @@
             color: var(--accent-color);
         }
 
+        /* IMAGES */
+        .featured-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 40px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+        
+        .image-caption {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
         /* CARDS */
         .problem-cards {
             display: grid;
@@ -189,7 +206,7 @@
             background-color: #f8f9fa;
             font-weight: bold;
             color: var(--primary-color);
-            list-style: none; /* Убираем стандартный маркер */
+            list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -216,6 +233,14 @@
             border-top: 1px solid #eee;
         }
 
+        .details-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
         .phenomenon-text h4 {
             color: var(--primary-color);
             border-bottom: 2px solid var(--accent-color);
@@ -231,7 +256,7 @@
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
 
@@ -248,16 +273,32 @@
         }
 
         .tool-card:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
             border-color: var(--accent-color);
             background: #fff;
         }
 
-        .tool-image i {
-            font-size: 50px;
-            color: var(--primary-color);
+        .tool-image {
+            height: 150px;
+            overflow: hidden;
+            border-radius: 5px;
             margin-bottom: 15px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tool-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .tool-card:hover .tool-image img {
+            transform: scale(1.05);
         }
 
         .btn-tool {
@@ -268,6 +309,82 @@
             color: #fff;
             border-radius: 5px;
             font-weight: bold;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* AUTHOR SECTION */
+        .author-section {
+            background-color: #fff;
+            margin-top: 60px;
+            padding: 60px 0;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .author-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .author-avatar {
+            flex: 0 0 250px;
+            text-align: center;
+        }
+
+        .author-avatar img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--bg-light);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .author-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .author-info h2 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .author-role {
+            color: var(--accent-color);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .contacts-list p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        
+        .contacts-list i {
+            width: 25px;
+            color: var(--accent-color);
+        }
+
+        .gallery-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .gallery-link:hover {
+            background-color: #2980b9;
         }
 
         /* FOOTER */
@@ -276,7 +393,6 @@
             color: #fff;
             text-align: center;
             padding: 40px 0;
-            margin-top: 60px;
         }
 
         footer p {
@@ -284,7 +400,6 @@
             opacity: 0.8;
         }
         
-        /* Адаптив */
         @media (max-width: 768px) {
             header .container {
                 flex-direction: column;
@@ -293,18 +408,18 @@
             nav a {
                 margin: 10px 10px 0;
             }
-            .questions-block li {
-                padding-left: 0;
+            .author-container {
+                flex-direction: column;
+                text-align: center;
             }
-            .questions-block i {
-                display: none;
+            .author-info h2 {
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Шапка -->
     <header>
         <div class="container">
             <div class="logo">
@@ -315,12 +430,13 @@
                 <a href="#about">О проекте</a>
                 <a href="#model">Модель SCI</a>
                 <a href="#tools">Инструменты</a>
+                <a href="#author">Автор</a>
             </nav>
         </div>
     </header>
 
     <main>
-        <!-- Блок 1: Мягкое введение -->
+        <!-- Блок 1: Вступление -->
         <section id="about" class="hero-intro">
             <div class="container">
                 <div class="intro-text">
@@ -328,60 +444,57 @@
                         Этот сайт посвящён фундаментальной проблеме воспроизводимой цветопередачи между различными физическими средами.
                     </p>
                     <p>
-                        Сегодня цифровое изображение, созданное на экране, неизбежно претерпевает искажения при печати, сканировании, фотографировании и последующем воспроизведении. Существующие методы управления цветом (CMS) ориентированы главным образом на субъективное визуальное соответствие человеческому восприятию. Они не обеспечивают инвариантности данных и не гарантируют сохранения математических соотношений между цветовыми компонентами сигнала.
+                        Сегодня цифровое изображение, созданное на экране, неизбежно претерпевает искажения при печати, сканировании, фотографировании и последующем воспроизведении. Существующие методы управления цветом (CMS) ориентированы главным образом на субъективное визуальное соответствие человеческому восприятию.
                     </p>
                     <p>
-                        <strong>Цель проекта</strong> — исследование и разработка методов, позволяющих сделать передачу цвета строго детерминированной, предсказуемой и аппаратно воспроизводимой. Основное внимание уделяется изучению физических ограничений реальных пигментов, межканальной интерференции (crosstalk) и способам их математической нормализации.
+                        <strong>Цель проекта</strong> — сделать передачу цвета строго детерминированной и математически точной через модель SCI.
                     </p>
                     
                     <div class="questions-block">
                         <h3>Фундаментальные вопросы проекта:</h3>
                         <ul>
-                            <li><i class="fas fa-question-circle"></i> <strong>Природа искажений:</strong> Почему одно и то же изображение выглядит по-разному на излучающем экране, отражающей бумаге и при повторном цифровом считывании?</li>
-                            <li><i class="fas fa-question-circle"></i> <strong>Инвариантность структуры:</strong> Можно ли полностью сохранить внутреннюю структуру цветового сигнала при переходе между принципиально разными физическими носителями?</li>
-                            <li><i class="fas fa-question-circle"></i> <strong>Единый базис:</strong> Возможно ли построить универсальный стандарт, одинаково применимый к дисплеям, печатному оборудованию, оптическим матрицам камер и системам компьютерного зрения?</li>
-                            <li><i class="fas fa-question-circle"></i> <strong>Смена парадигмы:</strong> Можно ли заменить эмпирическую (подгоночную) настройку цвета воспроизводимыми математическими принципами, основанными на физических константах?</li>
+                            <li><i class="fas fa-question-circle"></i> <strong>Природа искажений:</strong> Почему одно и то же изображение выглядит по-разному на экране и бумаге?</li>
+                            <li><i class="fas fa-question-circle"></i> <strong>Инвариантность:</strong> Можно ли сохранить структуру сигнала при переходе сред?</li>
+                            <li><i class="fas fa-question-circle"></i> <strong>Единый базис:</strong> Возможно ли создать универсальный стандарт для дисплеев и принтеров?</li>
                         </ul>
                     </div>
                 </div>
+
+                <!-- ГЛАВНАЯ КАРТИНКА МАТРИЦЫ -->
+                <img src="main_sci_rss_blueprint.png" alt="SCI Matrix Blueprint" class="featured-image">
+                <div class="image-caption">Схема матрицы SCI и принцип спектрального разделения</div>
             </div>
         </section>
 
-        <!-- Блок 2: Суть модели -->
+        <!-- Блок 2: Модель SCI -->
         <section id="model" class="sci-model-block" style="background-color: #fff;">
             <div class="container">
-                <div class="section-header">
-                    <h2>SCI Universal Model</h2>
-                    <p class="subtitle">Детерминированная нормализация спектрального отклика для воспроизводимой цветопередачи</p>
-                    <p style="text-align: center; max-width: 800px; margin: 0 auto 40px auto;">
-                        Модель SCI представляет собой метод согласования спектральных характеристик излучающих и отражающих сред, основанный на сохранении относительных пропорций сигнала, а не на перцепционной коррекции.
-                    </p>
-                </div>
+                <h2>SCI Universal Model</h2>
+                <p class="subtitle">Детерминированная нормализация спектрального отклика</p>
 
                 <div class="problem-cards">
                     <div class="card">
                         <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
                         <h3>Проблема</h3>
-                        <p><strong>Отсутствие спектральной инвариантности</strong></p>
-                        <p>Современные системы обеспечивают колориметрическое соответствие, но не гарантируют сохранение спектральной структуры при переходе между средами.</p>
+                        <p><strong>Отсутствие инвариантности</strong></p>
+                        <p>Стандартные ICC-профили обеспечивают визуальное сходство, но разрушают математическую структуру сигнала.</p>
                     </div>
 
                     <div class="card">
                         <div class="icon"><i class="fas fa-fill-drip"></i></div>
                         <h3>Физика</h3>
-                        <p><strong>Ограничения пигментов</strong></p>
-                        <p>Конечная спектральная селективность красителей приводит к межканальной интерференции и нарушению независимости компонентов.</p>
+                        <p><strong>Межканальный Crosstalk</strong></p>
+                        <p>Спектральные характеристики пигментов перекрываются, вызывая интерференцию и потерю данных.</p>
                     </div>
 
                     <div class="card">
                         <div class="icon"><i class="fas fa-ban"></i></div>
-                        <h3>Методы</h3>
-                        <p><strong>Ограничения ICC</strong></p>
-                        <p>ICC-профили ориентированы на глаз человека и не предназначены для сохранения математических отношений между сигналами.</p>
+                        <h3>Решение</h3>
+                        <p><strong>Спектральное Лимитирование</strong></p>
+                        <p>SCI приводит среду к общему знаменателю, делая субтрактивный синтез линейным.</p>
                     </div>
                 </div>
 
-                <!-- Скрывающийся блок -->
                 <details class="custom-details">
                     <summary>
                         <span class="btn-text">ПОДРОБНО: Физическая природа проблемы</span>
@@ -389,61 +502,49 @@
                     </summary>
                     <div class="details-content">
                         <div class="phenomenon-text">
-                            <h4>Феномен</h4>
+                            <h4>Феномен искажений</h4>
                             <p>
-                                Изображение, созданное на экране, неизбежно изменяется при печати, сканировании и повторном воспроизведении. Несмотря на существование современных систем управления цветом, одни и те же цифровые данные могут выглядеть по-разному на разных устройствах и носителях.
-                            </p>
-                            <p>
-                                Причина заключается не только в различии между экраном и бумагой, но и в том, что физические красители не способны сохранять структуру цветового сигнала с той же точностью, с которой она существует в цифровой среде.
-                            </p>
-                            <p>
-                                В результате цветопередача остается воспроизводимой лишь приблизительно, а накопление ошибок при переходе между различными физическими средами является фундаментальным свойством существующих технологий.
+                                Изображение неизбежно изменяется при переходе от экрана к бумаге. Причина не только в разной физике сред, но и в том, что красители не могут сохранить точность цифрового кода.
                             </p>
                             
-                            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+                            <!-- Картинка Crosstalk -->
+                            <img src="crosstalk_comparison.png" alt="Crosstalk Comparison">
                             
-                            <h4>Физическая природа проблемы</h4>
+                            <h4>Принцип SCI</h4>
                             <p>
-                                В аддитивных системах отображения (RGB) цвет формируется независимыми излучающими компонентами. В субтрактивных системах (CMYK) цвет определяется спектральными свойствами пигментов, обладающих конечной селективностью поглощения и отражения.
+                                Модель SCI использует "спектральный ограничитель" (обычно пурпурный компонент) для нормализации всего цветового пространства. Это позволяет свести физическую нелинейность к математически предсказуемой модели.
                             </p>
-                            <p>
-                                Спектральные характеристики реальных красителей не являются ортогональными. Их полосы поглощения и отражения частично перекрываются, что приводит к межканальной интерференции (crosstalk) и нарушению операционной независимости спектральных компонент.
-                            </p>
-                            <p>
-                                По этой причине переход от излучающей среды к отражающей не является линейным преобразованием. Даже при колориметрическом соответствии математические соотношения между компонентами сигнала изменяются, а повторные циклы «экран → печать → сканирование → экран» сопровождаются накоплением ошибок.
-                            </p>
-                            <p>
-                                Существующие методы управления цветом ориентированы преимущественно на визуальное соответствие человеческому восприятию и не ставят своей целью сохранение спектральной структуры сигнала.
-                            </p>
-                            <p>
-                                Таким образом, отсутствие спектральной инвариантности между различными физическими средами представляет собой фундаментальное ограничение современных систем воспроизведения цвета.
-                            </p>
+
+                            <!-- Картинка Scaling -->
+                            <img src="sci_spectral_scaling_blueprint.png" alt="Spectral Scaling Blueprint">
+                            
                         </div>
                     </div>
                 </details>
             </div>
         </section>
 
-        <!-- Блок 3: Генераторы -->
+        <!-- Блок 3: Инструменты -->
         <section class="tools-section" id="tools">
             <div class="container">
                 <h2>Инструменты и Генераторы</h2>
                 <p class="subtitle">Практическое применение модели SCI для кодирования данных.</p>
                 
                 <div class="tools-grid">
-                    <!-- Ссылки пока заглушки (#) -->
-                    <a href="#" class="tool-card" onclick="alert('Раздел в разработке'); return false;">
+                    <!-- Spectrum QR -->
+                    <a href="https://astra31415926.github.io/QR.G.B.-ART/" target="_blank" class="tool-card">
                         <div class="tool-image">
-                            <i class="fas fa-qrcode"></i>
+                            <img src="Mykhailo Kashkarov.png" alt="Spectrum QR Preview">
                         </div>
                         <h3>Spectrum QR Generator</h3>
-                        <p>Генерация многослойных цветных кодов с использованием спектрального разделения.</p>
+                        <p>Генерация и сканирование многослойных цветных кодов.</p>
                         <span class="btn-tool">Открыть</span>
                     </a>
 
-                    <a href="#" class="tool-card" onclick="alert('Раздел в разработке'); return false;">
+                    <!-- QRnament -->
+                    <a href="https://astra31415926.github.io/QRnament2/" target="_blank" class="tool-card">
                         <div class="tool-image">
-                            <i class="fas fa-paint-brush"></i>
+                            <img src="qrnament-mandala.png" alt="QRnament Preview">
                         </div>
                         <h3>QRnament Creator</h3>
                         <p>Создание орнаментальных кодов, совмещающих дизайн и функциональность.</p>
@@ -452,11 +553,38 @@
                 </div>
             </div>
         </section>
-
     </main>
 
+    <!-- Блок: Автор -->
+    <section class="author-section" id="author">
+        <div class="container author-container">
+            <div class="author-avatar">
+                <img src="avatar.png" alt="Михайло Кашкаров">
+            </div>
+            <div class="author-info">
+                <h2>Про автора</h2>
+                <span class="author-role">Михайло Кашкаров - Автор моделі SCI</span>
+                
+                <p>
+                    Художник та дослідник світла. Випускник Харківського художнього училища (1998) та Харківської академії дизайну і мистецтв (1999–2005). Розробник авторської RGB-техніки світлочутливого живопису. Модель SCI побудована на базі багаторічних практичних експериментів з поведінкою реальних фізичних пігментів та їх подальшої математичної формалізації.
+                </p>
+
+                <a href="https://astra31415926.github.io/" target="_blank" class="gallery-link">
+                    Перейти до арт-галереи <i class="fas fa-arrow-right"></i>
+                </a>
+
+                <div class="contacts-list" style="margin-top: 30px;">
+                    <h3>Контакти</h3>
+                    <p><i class="fas fa-phone"></i> Телефон: +380 63 505 8292</p>
+                    <p><i class="fas fa-envelope"></i> Email: bakminsterfuler@gmail.com</p>
+                    <p><i class="fab fa-github"></i> GitHub: <a href="https://github.com/Astra31415926" target="_blank" style="color:var(--primary-color);">@Astra31415926</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Футер -->
-    <footer id="contact">
+    <footer>
         <div class="container">
             <p>&copy; 2024 SCI Universal Model. Mikhail Kashkarov.</p>
             <p>Все права защищены. Спектральная целостность каналов.</p>
