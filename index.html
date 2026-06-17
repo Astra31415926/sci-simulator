@@ -1,94 +1,467 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>SCI Simulator — проста версія</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCI Universal Model | Spectral Channel Integrity</title>
+    <!-- Подключаем шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Подключаем иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
+        /* --- СТИЛИ --- */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-light: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #f0f4f8;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+            font-weight: 300;
+        }
+        
+        .logo p {
+            margin: 0; 
+            font-size: 12px; 
+            color: #666;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 60px 0;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
             text-align: center;
         }
-        .zone {
-            width: 200px;
-            height: 200px;
-            margin: 20px auto;
-            border-radius: 12px;
-            border: 2px solid #333;
+
+        h3 {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-top: 0;
         }
-        input {
-            width: 100%;
-            margin: 20px 0;
+
+        p {
+            margin-bottom: 15px;
         }
-        .diff {
-            font-size: 24px;
+
+        /* INTRO */
+        .intro-text {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .intro-text p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .questions-block {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .questions-block h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+
+        .questions-block ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .questions-block li {
+            margin-bottom: 20px;
+            padding-left: 35px;
+            position: relative;
+        }
+
+        .questions-block i {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            color: var(--accent-color);
+        }
+
+        /* CARDS */
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card .icon {
+            font-size: 40px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        /* DETAILS */
+        details {
+            background: #fff;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 20px;
+            cursor: pointer;
+            background-color: #f8f9fa;
             font-weight: bold;
-            margin: 20px 0;
+            color: var(--primary-color);
+            list-style: none; /* Убираем стандартный маркер */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary:hover {
+            background-color: #e9ecef;
+        }
+
+        summary .fa-chevron-down {
+            transition: transform 0.3s;
+        }
+
+        details[open] summary .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .details-content {
+            padding: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .phenomenon-text h4 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        /* TOOLS */
+        .tools-section {
+            background-color: #fff;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .tool-card {
+            background: var(--bg-light);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .tool-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
+            background: #fff;
+        }
+
+        .tool-image i {
+            font-size: 50px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .btn-tool {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+        
+        /* Адаптив */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav a {
+                margin: 10px 10px 0;
+            }
+            .questions-block li {
+                padding-left: 0;
+            }
+            .questions-block i {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-<h1>SCI Simulator</h1>
-<p>Рухай повзунок → дивись, як змінюються квадрати</p>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>SCI <span>Universal Model</span></h1>
+                <p>Spectral Channel Integrity</p>
+            </div>
+            <nav>
+                <a href="#about">О проекте</a>
+                <a href="#model">Модель SCI</a>
+                <a href="#tools">Инструменты</a>
+            </nav>
+        </div>
+    </header>
 
-<div>
-    <div class="zone" id="zoneA" style="background-color: rgb(50, 100, 200);"></div>
-    <div class="zone" id="zoneB" style="background-color: rgb(200, 80, 50);"></div>
-</div>
+    <main>
+        <!-- Блок 1: Мягкое введение -->
+        <section id="about" class="hero-intro">
+            <div class="container">
+                <div class="intro-text">
+                    <p>
+                        Этот сайт посвящён фундаментальной проблеме воспроизводимой цветопередачи между различными физическими средами.
+                    </p>
+                    <p>
+                        Сегодня цифровое изображение, созданное на экране, неизбежно претерпевает искажения при печати, сканировании, фотографировании и последующем воспроизведении. Существующие методы управления цветом (CMS) ориентированы главным образом на субъективное визуальное соответствие человеческому восприятию. Они не обеспечивают инвариантности данных и не гарантируют сохранения математических соотношений между цветовыми компонентами сигнала.
+                    </p>
+                    <p>
+                        <strong>Цель проекта</strong> — исследование и разработка методов, позволяющих сделать передачу цвета строго детерминированной, предсказуемой и аппаратно воспроизводимой. Основное внимание уделяется изучению физических ограничений реальных пигментов, межканальной интерференции (crosstalk) и способам их математической нормализации.
+                    </p>
+                    
+                    <div class="questions-block">
+                        <h3>Фундаментальные вопросы проекта:</h3>
+                        <ul>
+                            <li><i class="fas fa-question-circle"></i> <strong>Природа искажений:</strong> Почему одно и то же изображение выглядит по-разному на излучающем экране, отражающей бумаге и при повторном цифровом считывании?</li>
+                            <li><i class="fas fa-question-circle"></i> <strong>Инвариантность структуры:</strong> Можно ли полностью сохранить внутреннюю структуру цветового сигнала при переходе между принципиально разными физическими носителями?</li>
+                            <li><i class="fas fa-question-circle"></i> <strong>Единый базис:</strong> Возможно ли построить универсальный стандарт, одинаково применимый к дисплеям, печатному оборудованию, оптическим матрицам камер и системам компьютерного зрения?</li>
+                            <li><i class="fas fa-question-circle"></i> <strong>Смена парадигмы:</strong> Можно ли заменить эмпирическую (подгоночную) настройку цвета воспроизводимыми математическими принципами, основанными на физических константах?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<input type="range" id="slider" min="400" max="700" value="540" step="5">
+        <!-- Блок 2: Суть модели -->
+        <section id="model" class="sci-model-block" style="background-color: #fff;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>SCI Universal Model</h2>
+                    <p class="subtitle">Детерминированная нормализация спектрального отклика для воспроизводимой цветопередачи</p>
+                    <p style="text-align: center; max-width: 800px; margin: 0 auto 40px auto;">
+                        Модель SCI представляет собой метод согласования спектральных характеристик излучающих и отражающих сред, основанный на сохранении относительных пропорций сигнала, а не на перцепционной коррекции.
+                    </p>
+                </div>
 
-<div class="diff">
-    Різниця (ΔI): <span id="diff">0.0000</span>
-</div>
+                <div class="problem-cards">
+                    <div class="card">
+                        <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <h3>Проблема</h3>
+                        <p><strong>Отсутствие спектральной инвариантности</strong></p>
+                        <p>Современные системы обеспечивают колориметрическое соответствие, но не гарантируют сохранение спектральной структуры при переходе между средами.</p>
+                    </div>
 
-<p><strong>540 нм</strong> — квадрати однакові за яскравістю (злиття)</p>
+                    <div class="card">
+                        <div class="icon"><i class="fas fa-fill-drip"></i></div>
+                        <h3>Физика</h3>
+                        <p><strong>Ограничения пигментов</strong></p>
+                        <p>Конечная спектральная селективность красителей приводит к межканальной интерференции и нарушению независимости компонентов.</p>
+                    </div>
 
-<script>
-    const slider = document.getElementById('slider');
-    const diffSpan = document.getElementById('diff');
-    const zoneA = document.getElementById('zoneA');
-    const zoneB = document.getElementById('zoneB');
+                    <div class="card">
+                        <div class="icon"><i class="fas fa-ban"></i></div>
+                        <h3>Методы</h3>
+                        <p><strong>Ограничения ICC</strong></p>
+                        <p>ICC-профили ориентированы на глаз человека и не предназначены для сохранения математических отношений между сигналами.</p>
+                    </div>
+                </div>
 
-    function update() {
-        let wl = Number(slider.value);
-        
-        // Яскравість зони A: максимальна при 450 нм, мінімальна при 700
-        let brightnessA = 1 - Math.abs(wl - 450) / 300;
-        brightnessA = Math.min(1, Math.max(0.2, brightnessA));
-        
-        // Яскравість зони B: максимальна при 620 нм, мінімальна при 450
-        let brightnessB = 1 - Math.abs(wl - 620) / 300;
-        brightnessB = Math.min(1, Math.max(0.2, brightnessB));
-        
-        // Робимо їх рівними при 540 нм
-        if (wl >= 530 && wl <= 550) {
-            brightnessA = 0.7;
-            brightnessB = 0.7;
-        }
-        
-        // Змінюємо яскравість (додаємо білого або чорного)
-        zoneA.style.backgroundColor = `rgb(${50 + brightnessA * 50}, ${100 + brightnessA * 80}, ${200 - brightnessA * 50})`;
-        zoneB.style.backgroundColor = `rgb(${200 - brightnessB * 50}, ${80 + brightnessB * 60}, ${50 + brightnessB * 30})`;
-        
-        // Різниця
-        let diff = Math.abs(brightnessA - brightnessB);
-        diffSpan.textContent = diff.toFixed(4);
-        
-        if (diff < 0.05) {
-            diffSpan.style.color = "green";
-        } else {
-            diffSpan.style.color = "red";
-        }
-    }
+                <!-- Скрывающийся блок -->
+                <details class="custom-details">
+                    <summary>
+                        <span class="btn-text">ПОДРОБНО: Физическая природа проблемы</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </summary>
+                    <div class="details-content">
+                        <div class="phenomenon-text">
+                            <h4>Феномен</h4>
+                            <p>
+                                Изображение, созданное на экране, неизбежно изменяется при печати, сканировании и повторном воспроизведении. Несмотря на существование современных систем управления цветом, одни и те же цифровые данные могут выглядеть по-разному на разных устройствах и носителях.
+                            </p>
+                            <p>
+                                Причина заключается не только в различии между экраном и бумагой, но и в том, что физические красители не способны сохранять структуру цветового сигнала с той же точностью, с которой она существует в цифровой среде.
+                            </p>
+                            <p>
+                                В результате цветопередача остается воспроизводимой лишь приблизительно, а накопление ошибок при переходе между различными физическими средами является фундаментальным свойством существующих технологий.
+                            </p>
+                            
+                            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+                            
+                            <h4>Физическая природа проблемы</h4>
+                            <p>
+                                В аддитивных системах отображения (RGB) цвет формируется независимыми излучающими компонентами. В субтрактивных системах (CMYK) цвет определяется спектральными свойствами пигментов, обладающих конечной селективностью поглощения и отражения.
+                            </p>
+                            <p>
+                                Спектральные характеристики реальных красителей не являются ортогональными. Их полосы поглощения и отражения частично перекрываются, что приводит к межканальной интерференции (crosstalk) и нарушению операционной независимости спектральных компонент.
+                            </p>
+                            <p>
+                                По этой причине переход от излучающей среды к отражающей не является линейным преобразованием. Даже при колориметрическом соответствии математические соотношения между компонентами сигнала изменяются, а повторные циклы «экран → печать → сканирование → экран» сопровождаются накоплением ошибок.
+                            </p>
+                            <p>
+                                Существующие методы управления цветом ориентированы преимущественно на визуальное соответствие человеческому восприятию и не ставят своей целью сохранение спектральной структуры сигнала.
+                            </p>
+                            <p>
+                                Таким образом, отсутствие спектральной инвариантности между различными физическими средами представляет собой фундаментальное ограничение современных систем воспроизведения цвета.
+                            </p>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </section>
 
-    slider.addEventListener('input', update);
-    update();
-</script>
+        <!-- Блок 3: Генераторы -->
+        <section class="tools-section" id="tools">
+            <div class="container">
+                <h2>Инструменты и Генераторы</h2>
+                <p class="subtitle">Практическое применение модели SCI для кодирования данных.</p>
+                
+                <div class="tools-grid">
+                    <!-- Ссылки пока заглушки (#) -->
+                    <a href="#" class="tool-card" onclick="alert('Раздел в разработке'); return false;">
+                        <div class="tool-image">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <h3>Spectrum QR Generator</h3>
+                        <p>Генерация многослойных цветных кодов с использованием спектрального разделения.</p>
+                        <span class="btn-tool">Открыть</span>
+                    </a>
+
+                    <a href="#" class="tool-card" onclick="alert('Раздел в разработке'); return false;">
+                        <div class="tool-image">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>QRnament Creator</h3>
+                        <p>Создание орнаментальных кодов, совмещающих дизайн и функциональность.</p>
+                        <span class="btn-tool">Открыть</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Футер -->
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2024 SCI Universal Model. Mikhail Kashkarov.</p>
+            <p>Все права защищены. Спектральная целостность каналов.</p>
+        </div>
+    </footer>
 
 </body>
 </html>
